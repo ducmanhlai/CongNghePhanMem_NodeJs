@@ -1,0 +1,27 @@
+USE [CNPM]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_ThongKeTheoNam]    Script Date: 30-May-22 11:25:10 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+create proc [dbo].[sp_ThongKeTheoNam](@nam int)
+as
+select MONTH(CHITIETBAIVIET.ThoiGianBatDau) as thang ,COUNT(MONTH(CHITIETBAIVIET.ThoiGianBatDau)) as soluong
+from CHITIETBAIVIET
+where  Year(CHITIETBAIVIET.ThoiGianBatDau)= @nam
+GROUP BY MONTH(CHITIETBAIVIET.ThoiGianBatDau)
+GO
+
+create proc [dbo].[sp_ThongKeTheoThang](@nam int,@thang int)
+as
+select DAY(CHITIETBAIVIET.ThoiGianBatDau) as ngay ,COUNT(day(CHITIETBAIVIET.ThoiGianBatDau)) as soluong
+from CHITIETBAIVIET
+where  Year(CHITIETBAIVIET.ThoiGianBatDau)= @nam and  month(chitietbaiviet.ThoiGianBatDau)= @thang
+GROUP BY day(CHITIETBAIVIET.ThoiGianBatDau) 
+GO
+
